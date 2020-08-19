@@ -7,6 +7,10 @@ const session = require("express-session");
 
 const app = express();
 
+/* ------------------- Imports ------------------- */
+
+require('./db');
+
 /* ------------------- Middleware ------------------- */
 
 app.use(express.json());
