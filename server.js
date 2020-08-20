@@ -30,6 +30,11 @@ app.use(
     })
 );
 
+/* ------------------- Route ------------------- */
+
+const { GroceryRouter } = require('./routes');
+app.use('/', GroceryRouter);
+
 app.get('/', (req, res) => {
     res.send('Hello World!')
 })

@@ -1,5 +1,4 @@
-const Grocery = require('../models/contents-model');
-const mongoose = require('mongoose');
+const Grocery = require('../models/grocery-model');
 
 module.exports = {
     async createGrocery(req, res) {
@@ -13,13 +12,10 @@ module.exports = {
         }
 
         const grocery = new Grocery({
-            groceries: {
-                _id: mongoose.Types.ObjectId(),
-                member: body.member,
-                description: body.description,
-                completed: body.completed
-            }
-        });
+            email: body.email,
+            description: body.description,
+            completed: body.completed
+        })
 
         if (!grocery) {
             return res.status(400).json({
@@ -41,6 +37,16 @@ module.exports = {
                 message: 'Grocery not created!'
             })
         }
+    },
+    async getGroceries(req, res) {
+        try {
+            await Grocery.find({ email: req.body.email }, (err, groceries) => {
+                if (err) return res.status(400).json({ success: false, error: err });
+                if (!groceries.length) return res.status(404).json({ success: false, error: 'Groceries not found' });
+                return res.status(200).json(groceries);
+            })
+        } catch(err) {
+            console.log(err);
+        }
     }
-}
 }
