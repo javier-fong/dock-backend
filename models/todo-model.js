@@ -3,7 +3,10 @@ const Schema = mongoose.Schema;
 
 const todoSchema = new Schema(
     {
-        email: String,
+        email: [{
+            type: String,
+            default: ''
+        }],
         members: [{
             type: String,
             default: '',

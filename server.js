@@ -32,8 +32,8 @@ app.use(
 
 /* ------------------- Route ------------------- */
 
-const { GroceryRouter } = require('./routes');
-app.use('/', GroceryRouter);
+const { GroceryRouter, TodoRouter } = require('./routes');
+app.use('/', GroceryRouter, TodoRouter);
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
