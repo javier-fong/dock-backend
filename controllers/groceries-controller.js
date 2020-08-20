@@ -63,7 +63,7 @@ module.exports = {
             if (err) return res.status(404).json({ err, message: 'Grocery not found!' });
 
             grocery.description = body.description;
-            
+
             try {
                 await grocery.save();
                 return res.status(200).json({
@@ -79,5 +79,31 @@ module.exports = {
                 })
             }
         })
+    },
+    async deleteGrocery(req, res) {
+        try {
+            await Grocery.findOneAndDelete({ _id: req.params.id }, (err, grocery) => {
+                if (err) {
+                    return res.status(400).json({
+                        success: false,
+                        error: err
+                    })
+                }
+
+                if (!grocery) {
+                    return res.status(404).json({
+                        success: false,
+                        error: 'Grocery not found'
+                    })
+                }
+
+                return res.status(200).json({
+                    success: true,
+                    data: grocery
+                })
+            })
+        } catch (err) {
+            console.log(err)
+        }
     }
 }
