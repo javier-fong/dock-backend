@@ -15,7 +15,20 @@ require('./db');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(
+    cors({
+        origin: 'http://localhost:8000',
+        credentials: true,
+        methods: 'GET, PUT, POST, DELETE'
+    })
+);
+app.use(
+    session({
+        secret: "familydockapp",
+        resave: true,
+        saveUninitialized: true,
+    })
+);
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
