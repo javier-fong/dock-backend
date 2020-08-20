@@ -5,11 +5,11 @@ const userSchema = new Schema(
   {
     _id: mongoose.Schema.Types.ObjectId,
     firstName: {
-        tyope: String,
+        type: String,
         required: true
     },
     lastName: {
-        tyope: String,
+        type: String,
         required: true
     },
     email: {
@@ -26,4 +26,4 @@ const userSchema = new Schema(
   }
 );
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("Users", userSchema);
