@@ -45,8 +45,39 @@ module.exports = {
                 if (!groceries.length) return res.status(404).json({ success: false, error: 'Groceries not found' });
                 return res.status(200).json(groceries);
             })
-        } catch(err) {
+        } catch (err) {
             console.log(err);
         }
+    },
+    async updateGrocery(req, res) {
+        const body = req.body;
+
+        if (!body) {
+            return res.status(400).json({
+                success: false,
+                error: 'You must provide a body to update'
+            })
+        }
+
+        Grocery.findOne({ _id: req.params.id }, async (err, grocery) => {
+            if (err) return res.status(404).json({ err, message: 'Grocery not found!' });
+
+            grocery.description = body.description;
+            
+            try {
+                await grocery.save();
+                return res.status(200).json({
+                    success: true,
+                    id: grocery._id,
+                    message: 'Grocery updated!'
+                })
+            } catch (err) {
+                console.log(err);
+                return res.status(400).json({
+                    err,
+                    message: 'Grocery not updated!'
+                })
+            }
+        })
     }
 }
