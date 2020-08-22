@@ -4,6 +4,7 @@ const express = require('express');
 const PORT = process.env.PORT || 3000;
 const cors = require('cors');
 const session = require("express-session");
+require('dotenv').config();
 
 const app = express();
 
@@ -32,8 +33,8 @@ app.use(
 
 /* ------------------- Route ------------------- */
 
-const { GroceryRouter, TodoRouter } = require('./routes');
-app.use('/', GroceryRouter, TodoRouter);
+const { AuthRouter, GroceryRouter, TodoRouter } = require('./routes');
+app.use('/', AuthRouter, GroceryRouter, TodoRouter);
 
 app.get('/', (req, res) => {
     res.send('Hello World!')

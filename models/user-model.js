@@ -3,15 +3,8 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
   {
-    _id: mongoose.Schema.Types.ObjectId,
-    firstName: {
-        type: String,
-        required: true
-    },
-    lastName: {
-        type: String,
-        required: true
-    },
+    firstName: String,
+    lastName: String,
     email: {
       type: String,
       required: true
@@ -19,7 +12,7 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true
-    }
+    },
   },
   {
     timestamps: true
