@@ -3,15 +3,19 @@ const Schema = mongoose.Schema;
 
 const todoSchema = new Schema(
     {
+        toDoListName: String,
         email: [{
             type: String,
             default: ''
         }],
-        members: [{
+        assignedMembers: [{
             type: String,
             default: '',
         }],
-        description: String,
+        description: [{
+            type: String,
+            default: ''
+        }],
         completed: Boolean
     },
     {
