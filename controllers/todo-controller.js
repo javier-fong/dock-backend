@@ -86,6 +86,37 @@ module.exports = {
             console.log(err);
         }
     },
+    async updateToDoListName(req, res) {
+        const body = req.body;
+
+        if (!body) {
+            return res.status(400).json({
+                success: false,
+                error: 'You must provide a body to update'
+            })
+        }
+
+        Todo.findOne({ _id: req.params.id }, async (err, todo) => {
+            if (err) return res.status(404).json({ err, message: 'Todo not found!' });
+
+            todo.toDoListName = body.toDoListName;
+
+            try {
+                await todo.save();
+                return res.status(200).json({
+                    success: true,
+                    id: todo._id,
+                    message: 'Todo updated!'
+                })
+            } catch (err) {
+                console.log(err);
+                return res.status(400).json({
+                    err,
+                    message: 'Todo not updated!'
+                })
+            }
+        })
+    },
     async updateTodoCompleted(req, res) {
         const body = req.body;
 
@@ -117,7 +148,37 @@ module.exports = {
             }
         })
     },
-    async deleteTodo(req, res) {
+    async deleteToDoItem(req, res) {
+        try {
+            await Todo.updateOne({ _id: req.params.id }, {
+                $pull: {
+                    description: {
+                        $in: req.body.description
+                    }
+                }
+            }, (err, result) => {
+                if (err) {
+                    return res.status(400).json({
+                        success: false,
+                        error: err
+                    })
+                }
+                if (!result) {
+                    return res.status(404).json({
+                        success: false,
+                        error: 'Todo not found'
+                    })
+                }
+                return res.status(200).json({
+                    success: true,
+                    data: result
+                })
+            })
+        } catch(err) {
+            console.log(err);
+        }
+    },
+    async deleteToDoList(req, res) {
         try {
             await Todo.findOneAndDelete({ _id: req.params.id }, (err, todo) => {
                 if (err) {
