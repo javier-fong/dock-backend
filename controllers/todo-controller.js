@@ -117,6 +117,41 @@ module.exports = {
             }
         })
     },
+    async updateToDoItem(req, res) {
+        const body = req.body;
+
+        if (!body) {
+            return res.status(400).json({
+                success: false,
+                error: 'You must provide a body to update'
+            })
+        }
+
+        Todo.updateOne({ _id: req.params.id }, {
+            $set: {
+                [`description.${body.index}`]: body.description
+            }
+        }, async (err, result) => {
+            if (err) {
+                return res.status(404).json({
+                    err,
+                    message: `unable to update To Do item due to ${err.message}`
+                })
+            }
+            try {
+                return res.status(200).json({
+                    success:true,
+                    id: result._id,
+                    message: 'To Do item updated'
+                })
+            } catch (err) {
+                return res.status(400).json({
+                    err,
+                    message :`unable to update To Do item due to ${err.message}`
+                })
+            }
+        })
+    },
     async updateTodoCompleted(req, res) {
         const body = req.body;
 

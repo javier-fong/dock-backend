@@ -9,6 +9,7 @@ router.get('/todos/:email', TodoController.getTodos);
 router.put('/todo/item/:id', TodoController.addToDoItems);
 router.put('/todo/completed/:id', TodoController.updateTodoCompleted);
 router.put('/todo/list/:id', TodoController.updateToDoListName);
+router.put('/todo/item/update/:id', TodoController.updateToDoItem);
 router.delete('/todo/item/:id', TodoController.deleteToDoItem);
 router.delete('/todo/list/:id', TodoController.deleteToDoList);
 
