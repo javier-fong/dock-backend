@@ -5,6 +5,7 @@ const userSchema = new Schema(
   {
     firstName: String,
     lastName: String,
+    picture: String,
     email: {
       type: String,
       required: true

@@ -8,7 +8,7 @@ module.exports = {
     async googleLogin(req, res) {
         const { tokenId } = req.body;
         client.verifyIdToken({ idToken: tokenId, audience: process.env.GOOGLE_CLIENT_ID }).then(response => {
-            const { email_verified, given_name, family_name, email } = response.payload;
+            const { email_verified, given_name, family_name, email, picture } = response.payload;
             if (email_verified) {
                 User.findOne({ email }, (err, user) => {
                     if (err) {
@@ -16,7 +16,7 @@ module.exports = {
                     } else {
                         if (user) {
                             const token = jwt.sign({ _id: user._id }, process.env.JWT_SIGNIN_KEY, { expiresIn: '7d' });
-                            const { _id, firstName, lastName, email } = user;
+                            const { _id, firstName, lastName, email, picture } = user;
 
                             res.json({
                                 token,
@@ -24,6 +24,7 @@ module.exports = {
                                     _id,
                                     firstName,
                                     lastName,
+                                    picture,
                                     email
                                 }
                             })
@@ -32,6 +33,7 @@ module.exports = {
                             let newUser = new User({
                                 firstName: given_name,
                                 lastName: family_name,
+                                picture,
                                 email,
                                 password
                             });

@@ -188,7 +188,7 @@ module.exports = {
             await Todo.updateOne({ _id: req.params.id }, {
                 $pull: {
                     description: {
-                        $in: req.body.description
+                        $in: req.params.description
                     }
                 }
             }, (err, result) => {
