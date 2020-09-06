@@ -33,6 +33,7 @@ module.exports = {
                             let newUser = new User({
                                 firstName: given_name,
                                 lastName: family_name,
+                                members: given_name,
                                 picture,
                                 email,
                                 password
