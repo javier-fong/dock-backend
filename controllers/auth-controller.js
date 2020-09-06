@@ -16,7 +16,7 @@ module.exports = {
                     } else {
                         if (user) {
                             const token = jwt.sign({ _id: user._id }, process.env.JWT_SIGNIN_KEY, { expiresIn: '7d' });
-                            const { _id, firstName, lastName, email, picture } = user;
+                            const { _id, firstName, lastName, email, picture, members } = user;
 
                             res.json({
                                 token,
@@ -25,7 +25,8 @@ module.exports = {
                                     firstName,
                                     lastName,
                                     picture,
-                                    email
+                                    email,
+                                    members
                                 }
                             })
                         } else {

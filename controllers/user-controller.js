@@ -92,7 +92,7 @@ module.exports = {
             await Users.updateOne({ _id: req.params.id }, {
                 $pull: {
                     members: {
-                        $in: req.params.members
+                        $in:    req.params.members
                     }
                 }
             }, (err, result) => {
@@ -113,6 +113,8 @@ module.exports = {
                     data: result
                 })
             })
+            console.log(req.params.members)
+            console.log(req.params.id)
         } catch (err) {
             console.log(err);
         }
