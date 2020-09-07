@@ -12,6 +12,7 @@ module.exports = {
         }
 
         const todo = new Todo({
+            owner: body.owner,
             toDoListName: body.toDoListName,
             email: body.email
         })

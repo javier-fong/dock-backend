@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const todoSchema = new Schema(
     {
+        owner: String,
         toDoListName: String,
         email: [{
             type: String,

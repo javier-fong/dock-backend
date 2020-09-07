@@ -1,7 +1,7 @@
 const Users = require('../models/user-model');
 
 module.exports = {
-    async addMembers(req, res) {
+    async addMember(req, res) {
         const body = req.body;
 
         if (!body) {
@@ -113,8 +113,6 @@ module.exports = {
                     data: result
                 })
             })
-            console.log(req.params.members)
-            console.log(req.params.id)
         } catch (err) {
             console.log(err);
         }
