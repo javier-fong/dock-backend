@@ -9,10 +9,7 @@ const photoJournalSchema = new Schema(
             default: ''
         }],
         image: String,
-        caption: [{
-            type: String,
-            default: ''
-        }]
+        caption: String
     },
     {
         timestamps: true
