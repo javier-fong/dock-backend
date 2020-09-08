@@ -14,7 +14,8 @@ module.exports = {
         const todo = new Todo({
             owner: body.owner,
             toDoListName: body.toDoListName,
-            email: body.email
+            email: body.email,
+            completed: body.completed
         })
 
         if (!todo) {
@@ -50,7 +51,10 @@ module.exports = {
             { _id: req.params.id},
             {
                 $push: {
-                    description: body.description
+                    description: {
+                        item: body.item,
+                        completed: body.completed
+                    }
                 }
             },
             async (err,result) => {
@@ -130,7 +134,7 @@ module.exports = {
 
         Todo.updateOne({ _id: req.params.id }, {
             $set: {
-                [`description.${body.index}`]: body.description
+                [`description.${body.index}.item`]: body.description
             }
         }, async (err, result) => {
             if (err) {
@@ -163,23 +167,27 @@ module.exports = {
             })
         }
 
-        Todo.findOne({ _id: req.params.id }, async (err, todo) => {
-            if (err) return res.status(404).json({ err, message: 'Todo not found!' });
-
-            todo.completed = body.completed;
-
+        Todo.updateOne({ _id: req.params.id }, {
+            $set: {
+                [`description.${body.index}.completed`]: body.completed
+            }
+        }, async (err, result) => {
+            if (err) {
+                return res.status(404).json({
+                    err,
+                    message: `unable to update To Do item due to ${err.message}`
+                })
+            }
             try {
-                await todo.save();
                 return res.status(200).json({
                     success: true,
-                    id: todo._id,
-                    message: 'Todo updated!'
+                    id: result._id,
+                    message: 'To Do item updated'
                 })
             } catch (err) {
-                console.log(err);
                 return res.status(400).json({
                     err,
-                    message: 'Todo not updated!'
+                    message :`unable to update To Do item due to ${err.message}`
                 })
             }
         })
@@ -189,7 +197,9 @@ module.exports = {
             await Todo.updateOne({ _id: req.params.id }, {
                 $pull: {
                     description: {
-                        $in: req.params.description
+                        item: {
+                            $in: req.params.description
+                        }
                     }
                 }
             }, (err, result) => {

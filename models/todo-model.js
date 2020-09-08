@@ -14,10 +14,15 @@ const todoSchema = new Schema(
             default: '',
         }],
         description: [{
-            type: String,
-            default: ''
-        }],
-        completed: Boolean
+            item: {
+                type: String,
+                default: '',
+            },
+            completed: {
+                type: Boolean,
+                default: false
+            }
+        }]
     },
     {
         timestamps: true
