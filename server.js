@@ -1,7 +1,7 @@
 /* ------------------- Dependencies ------------------- */
 
 const express = require('express');
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 const cors = require('cors');
 const session = require("express-session");
 require('dotenv').config();
@@ -17,16 +17,8 @@ require('./db');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set('trust proxy', 1);
-app.use(
-    cors({
-        origin: ['https://dock-frontend.herokuapp.com', 'http://localhost:8000'],
-        // credentials: true,
-        // 'Access-Control-Allow-Origin': 'https://dock-frontend.herokuapp.com',
-        // 'Access-Control-Allow-Credentials': true,
-        // 'Access-Control-Allow-Headers' : 'Origin, Content-Type, Accept',
-        methods: 'GET, PUT, POST, DELETE'
-    })
-);
+app.use(cors());
+
 app.use(
     session({
       secret: "familydockapp",
