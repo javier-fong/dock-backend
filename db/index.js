@@ -7,7 +7,7 @@ mongoose.connection
 .once('open', () => {
     console.log('Connected to Mongo: ' + MONGODB_URI);
 }).on('error', err => {
-    console.log(err.message + ' is Mongo not running?')
+    console.log(err + ' is Mongo not running?')
 }).on('disconnected', err => {
-    console.log(err.message + ' is Mongo disconnected?')
+    console.log(err + ' is Mongo disconnected?')
 });
