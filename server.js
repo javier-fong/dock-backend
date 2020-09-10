@@ -20,9 +20,9 @@ app.set('trust proxy', 1);
 app.use(
     cors({
         origin: ['https://dock-frontend.herokuapp.com', 'http://localhost:8000'],
-        credentials: true,
-        'Access-Control-Allow-Origin': 'https://dock-frontend.herokuapp.com',
-        'Access-Control-Allow-Credentials': true,
+        // credentials: true,
+        // 'Access-Control-Allow-Origin': 'https://dock-frontend.herokuapp.com',
+        // 'Access-Control-Allow-Credentials': true,
         // 'Access-Control-Allow-Headers' : 'Origin, Content-Type, Accept',
         methods: 'GET, PUT, POST, DELETE'
     })
