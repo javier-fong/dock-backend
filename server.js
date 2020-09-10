@@ -22,6 +22,7 @@ app.use(
         credentials: true,
         'Access-Control-Allow-Origin' : 'http://localhost:8000',
         'Access-Control-Allow-Credentials': true,
+        'Access-Control-Allow-Headers' : 'Origin, Content-Type, Accept',
         methods: 'GET, PUT, POST, DELETE'
     })
 );
