@@ -19,10 +19,10 @@ app.use(express.urlencoded({ extended: true }));
 app.set('trust proxy', 1);
 app.use(
     cors({
-        origin: 'http://localhost:8000',
+        origin: 'http://localhost:8000/',
         credentials: true,
         // 'Access-Control-Allow-Origin' : 'http://localhost:8000',
-        // 'Access-Control-Allow-Credentials': true,
+        'Access-Control-Allow-Credentials': true,
         // 'Access-Control-Allow-Headers' : 'Origin, Content-Type, Accept',
         methods: 'GET, PUT, POST, DELETE'
     })
