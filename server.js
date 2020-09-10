@@ -16,6 +16,7 @@ require('./db');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.set('trust proxy', 1);
 app.use(
     cors({
         origin: 'http://localhost:8000',
@@ -28,11 +29,15 @@ app.use(
 );
 app.use(
     session({
-        secret: "familydockapp",
-        resave: true,
-        saveUninitialized: true,
+      secret: "familydockapp",
+      resave: false,
+      saveUninitialized: true,
+      cookie: {
+        sameSite: 'none',
+        secure: true
+      }
     })
-);
+  );
 
 /* ------------------- Route ------------------- */
 
