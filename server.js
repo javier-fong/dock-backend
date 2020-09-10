@@ -20,6 +20,7 @@ app.use(
     cors({
         origin: 'http://localhost:8000',
         credentials: true,
+        'Access-Control-Allow-Origin' : 'http://localhost:8000',
         'Access-Control-Allow-Credentials': true,
         methods: 'GET, PUT, POST, DELETE'
     })
