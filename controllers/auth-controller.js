@@ -13,7 +13,7 @@ module.exports = {
             const { email_verified, given_name, family_name, email, picture } = response.payload;
 
             if (email_verified) {
-                await User.findOne({ email }, (err, user) => {
+                await User.findOne({ email }, async (err, user) => {
                     if (err) {
                         return res.status(400).json({ err, message: 'Something went wrong..' })
                     } else {
