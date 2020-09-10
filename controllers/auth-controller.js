@@ -7,7 +7,9 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 module.exports = {
     async googleLogin(req, res) {
         const { tokenId } = req.body;
-        client.verifyIdToken({ idToken: tokenId, audience: process.env.GOOGLE_CLIENT_ID }).then(response => {
+
+        try {
+            const response = await client.verifyIdToken({ idToken: tokenId, audience: process.env.GOOGLE_CLIENT_ID });
             const { email_verified, given_name, family_name, email, picture } = response.payload;
             if (email_verified) {
                 User.findOne({ email }, (err, user) => {
@@ -60,8 +62,8 @@ module.exports = {
                     }
                 })
             }
-        }).catch(err => {
+        } catch (err) {
             console.log(err)
-        })
+        }
     }
 }
