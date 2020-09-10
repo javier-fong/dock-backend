@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set('trust proxy', 1);
 app.use(
     cors({
-        origin: ['http://localhost:8000/', 'https://dock-frontend.herokuapp.com/'],
+        origin: ['http://localhost:8000', 'https://dock-frontend.herokuapp.com'],
         credentials: true,
         // 'Access-Control-Allow-Origin' : 'http://localhost:8000',
         'Access-Control-Allow-Credentials': true,
