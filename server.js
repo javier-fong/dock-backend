@@ -17,19 +17,26 @@ require('./db');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set('trust proxy', 1);
-app.use(cors());
+app.use(
+  cors({
+    origin: ['https://dock-frontend.herokuapp.com/', 'http://localhost:8000'],
+    credentials: true,
+    allowedHeaders: "*",
+    methods: 'GET, PUT, POST, DELETE'
+  })
+);
 
 app.use(
-    session({
-      secret: "familydockapp",
-      resave: false,
-      saveUninitialized: true,
-      cookie: {
-        sameSite: 'none',
-        secure: true
-      }
-    })
-  );
+  session({
+    secret: "familydockapp",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      sameSite: 'none',
+      secure: true
+    }
+  })
+);
 
 /* ------------------- Route ------------------- */
 
@@ -37,9 +44,9 @@ const { AuthRouter, TodoRouter, PhotoJournalRouter, UserRouter } = require('./ro
 app.use('/', AuthRouter, TodoRouter, PhotoJournalRouter, UserRouter);
 
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+  res.send('Hello World!')
 })
 
 app.listen(PORT, () => {
-    console.log(`Listening to port: ${PORT}`)
+  console.log(`Listening to port: ${PORT}`)
 })
