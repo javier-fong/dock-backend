@@ -11,8 +11,9 @@ module.exports = {
         try {
             const response = await client.verifyIdToken({ idToken: tokenId, audience: process.env.GOOGLE_CLIENT_ID });
             const { email_verified, given_name, family_name, email, picture } = response.payload;
+
             if (email_verified) {
-                User.findOne({ email }, (err, user) => {
+                await User.findOne({ email }, (err, user) => {
                     if (err) {
                         return res.status(400).json({ err, message: 'Something went wrong..' })
                     } else {
@@ -41,7 +42,7 @@ module.exports = {
                                 email,
                                 password
                             });
-                            newUser.save((err, data) => {
+                            await newUser.save((err, data) => {
                                 if (err) {
                                     return res.status(400).json({ err, message: 'User not saved' })
                                 }
