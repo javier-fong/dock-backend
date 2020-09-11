@@ -40,8 +40,8 @@ app.use(
 
 /* ------------------- Route ------------------- */
 
-const { AuthRouter, TodoRouter, PhotoJournalRouter, UserRouter } = require('./routes');
-app.use('/', AuthRouter, TodoRouter, PhotoJournalRouter, UserRouter);
+const { AuthRouter, TodoRouter, PhotoJournalRouter, UserRouter, CalendarRouter } = require('./routes');
+app.use('/', AuthRouter, TodoRouter, PhotoJournalRouter, UserRouter, CalendarRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
