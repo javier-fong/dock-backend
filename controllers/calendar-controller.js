@@ -50,6 +50,17 @@ module.exports = {
             console.log(err);
         }
     },
+    async getOneEvent(req, res) {
+        try {
+            await CalendarEvent.find({ email: req.params.email }).sort({ _id: -1 }).limit(1).exec((err, event) => {
+                if (err) return res.status(400).json({ success: false, error: err });
+                if (!event.length) return res.status(404).json({ success: false, error: 'Event not found' });
+                return res.status(200).json(event);
+            })
+        } catch(err) {
+            console.log(err)
+        }
+    },
     async deleteEvent(req, res) {
         try {
             await CalendarEvent.findOneAndDelete({ start: req.params.start, end:req.params.end, title: req.params.title }, (err, event) => {
