@@ -50,6 +50,17 @@ module.exports = {
             console.log(err);
         }
     },
+    async getOneJournalPost(req, res) {
+        try {
+            await PhotoJournal.findOne({ email: req.params.email }, {}, { sort: { 'createdAt': -1 } }, (err, post) => {
+                if (err) return res.status(400).json({ success: false, error: err });
+                if (!post.length) return res.status(404).json({ success: false, error: 'Journal post not found' });
+                return res.status(200).json(post);
+            })
+        } catch(err) {
+            console.log(err)
+        }
+    },
     async editJournalPost(req, res) {
         const body = req.body;
 
