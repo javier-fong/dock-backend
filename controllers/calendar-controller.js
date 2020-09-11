@@ -14,8 +14,8 @@ module.exports = {
         const newCalendarEvent = new CalendarEvent({
             email: body.email,
             title: body.title,
-            start: new Date(body.start),
-            end: new Date(body.end)
+            start: body.start,
+            end: body.end
         })
 
         if (!newCalendarEvent) {
