@@ -41,7 +41,7 @@ module.exports = {
     },
     async getEvents(req, res) {
         try {
-            await CalendarEvent.find({ email: req.params.email }, (err, events) => {
+            await CalendarEvent.find({ email: req.params.email }, '-email', (err, events) => {
                 if (err) return res.status(400).json({ success: false, error: err });
                 if (!events.length) return res.status(404).json({ success: false, error: 'Calendar events not found' });
                 return res.status(200).json(events);
