@@ -52,7 +52,7 @@ module.exports = {
     },
     async getOneJournalPost(req, res) {
         try {
-            await PhotoJournal.findOne({ email: req.params.email }, {}, { sort: { 'createdAt': -1 } }, (err, post) => {
+            await PhotoJournal.find({ email: req.params.email }).sort({ _id: -1 }).limit(1).exec((err, post) => {
                 if (err) return res.status(400).json({ success: false, error: err });
                 if (!post.length) return res.status(404).json({ success: false, error: 'Journal post not found' });
                 return res.status(200).json(post);
