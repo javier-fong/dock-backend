@@ -91,6 +91,17 @@ module.exports = {
             console.log(err);
         }
     },
+    async getThreeToDos(req, res) {
+        try {
+            await Todo.find({ email: req.params.email }).sort({ _id: -1 }).limit(3).exec((err, todo) => {
+                if (err) return res.status(400).json({ success: false, error: err });
+                if (!todo.length) return res.status(404).json({ success: false, error: 'To do not found' });
+                return res.status(200).json(todo);
+            })
+        } catch(err) {
+            console.log(err)
+        }
+    },
     async updateToDoListName(req, res) {
         const body = req.body;
 

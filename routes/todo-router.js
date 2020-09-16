@@ -5,6 +5,7 @@ const TodoController = require('../controllers/todo-controller');
 
 router.post('/todoList', TodoController.createToDoList);
 router.get('/todos/:email', TodoController.getTodos);
+router.get('/getthreetodos/:email', TodoController.getThreeToDos);
 router.put('/todo/item/:id', TodoController.addToDoItems);
 router.put('/todo/completed/:id', TodoController.updateTodoCompleted);
 router.put('/todo/list/:id', TodoController.updateToDoListName);
