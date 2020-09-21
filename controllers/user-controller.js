@@ -159,6 +159,10 @@ module.exports = {
             console.log(err)
         }
     },
+    getUser(req, res) {
+        res.send(req.user) // The req.user stores the entire user that has been authenticated inside of it. 
+        //can be used for the rest of the app
+    },
     logout(req, res) {
         req.logout();
         res.status(200).send('User logged out!');
