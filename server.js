@@ -4,6 +4,7 @@ const express = require('express');
 const PORT = process.env.PORT || 3000;
 const cors = require('cors');
 const session = require("express-session");
+const passport = require("passport");
 require('dotenv').config();
 
 const app = express();
@@ -37,6 +38,10 @@ app.use(
     }
   })
 );
+
+require('./config/passport-local-strategy')(passport);
+app.use(passport.initialize());
+app.use(passport.session());
 
 /* ------------------- Route ------------------- */
 

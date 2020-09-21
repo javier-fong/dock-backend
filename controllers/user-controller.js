@@ -1,4 +1,6 @@
 const Users = require('../models/user-model');
+const passport = require("passport");
+const bcrypt = require("bcryptjs");
 
 module.exports = {
     async addMember(req, res) {
@@ -92,7 +94,7 @@ module.exports = {
             await Users.updateOne({ _id: req.params.id }, {
                 $pull: {
                     members: {
-                        $in:    req.params.members
+                        $in: req.params.members
                     }
                 }
             }, (err, result) => {
@@ -116,5 +118,47 @@ module.exports = {
         } catch (err) {
             console.log(err);
         }
+    },
+    login(req, res, next) {
+        passport.authenticate("local", (err, user, info) => {
+            if (err) throw err;
+            if (!user) res.status(400).send("No User Exists");
+            else {
+                req.login(user, (err) => {
+                    if (err) throw err;
+                    res.status(201).send("Successfully Authenticated");
+                })
+            }
+        })(req, res, next);
+    },
+    async register(req, res) {
+        try {
+            await User.findOne({ $or: [{ username: req.body.username }, { email: req.body.email }] }, async (err, doc) => {
+                if (err) throw err;
+                if (doc) return res.status(201).json(doc)
+                if (!doc) {
+                    try {
+                        await bcrypt.hash(req.body.password, 10);
+
+                        const newUser = new Users({
+                            firstName: req.body.firstName,
+                            lastName: req.body.lastName,
+                            email: req.body.email,
+                            password: req.body.password
+                        });
+                        await newUser.save();
+                        res.status(201).send('User created!');
+                    } catch (err) {
+                        console.log(err)
+                    }
+                }
+            });
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    logout(req, res) {
+        req.logout();
+        res.status(200).send('User logged out!');
     }
 }
