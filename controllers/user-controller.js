@@ -135,7 +135,10 @@ module.exports = {
         try {
             await Users.findOne({ email: req.body.email }, async (err, doc) => {
                 if (err) throw err;
-                if (doc) return res.status(201).json({ data: doc })
+                if (doc) return res.status(404).json({
+                    success: false,
+                    data: doc
+                })
                 if (!doc) {
                     try {
                         const hashedPassword = await bcrypt.hash(req.body.password, 10);
