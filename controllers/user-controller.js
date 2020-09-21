@@ -144,7 +144,8 @@ module.exports = {
                             firstName: req.body.firstName,
                             lastName: req.body.lastName,
                             email: req.body.email,
-                            password: req.body.password
+                            password: req.body.password,
+                            members: req.body.members
                         });
                         await newUser.save();
                         res.status(201).send('User created!');
