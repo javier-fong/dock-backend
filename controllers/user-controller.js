@@ -138,13 +138,14 @@ module.exports = {
                 if (doc) return res.status(201).json({ data: doc })
                 if (!doc) {
                     try {
-                        await bcrypt.hash(req.body.password, 10);
+                        const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
                         const newUser = new Users({
                             firstName: req.body.firstName,
                             lastName: req.body.lastName,
+                            picture: req.body.picture,
                             email: req.body.email,
-                            password: req.body.password,
+                            password: hashedPassword,
                             members: req.body.members
                         });
                         await newUser.save();
