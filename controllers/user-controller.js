@@ -134,7 +134,10 @@ module.exports = {
     async register(req, res) {
         try {
             await Users.findOne({ email: req.body.email }, async (err, doc) => {
-                if (err) throw err;
+                if (err) return res.json({
+                    success: false,
+                    data: doc
+                });
                 if (doc) return res.json({
                     success: false,
                     data: doc
