@@ -133,7 +133,7 @@ module.exports = {
     },
     async register(req, res) {
         try {
-            await User.findOne({ $or: [{ username: req.body.username }, { email: req.body.email }] }, async (err, doc) => {
+            await User.findOne({ email: req.body.email }, async (err, doc) => {
                 if (err) throw err;
                 if (doc) return res.status(201).json(doc)
                 if (!doc) {
