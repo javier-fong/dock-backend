@@ -126,7 +126,7 @@ module.exports = {
             else {
                 req.login(user, (err) => {
                     if (err) throw err;
-                    res.status(201).send("Successfully Authenticated");
+                    res.json(user);
                 })
             }
         })(req, res, next);
